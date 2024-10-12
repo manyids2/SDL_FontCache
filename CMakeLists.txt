@@ -19,6 +19,8 @@ target_link_libraries(
   ${SDL2TTF_LIBRARIES}
   ${CMAKE_DL_LIBS})
 
+install(TARGETS FontCache DESTINATION lib)
+
 add_executable(
   FontCache-tests
 	test/main.c)
