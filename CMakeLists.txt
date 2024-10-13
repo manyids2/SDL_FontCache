@@ -7,8 +7,7 @@ PKG_SEARCH_MODULE(SDL2TTF REQUIRED SDL2_ttf)
 
 add_library(FontCache
     SDL_FontCache.h
-    SDL_FontCache.c
-)
+    SDL_FontCache.c)
 include_directories(
   ${SDL2_INCLUDE_DIR}
   ${SDL2TTF_INCLUDE_DIRS})
@@ -18,13 +17,16 @@ target_link_libraries(
   ${SDL2_LIBRARY}
   ${SDL2TTF_LIBRARIES}
   ${CMAKE_DL_LIBS})
-
 install(TARGETS FontCache DESTINATION lib)
 
-add_executable(
-  FontCache-tests
-	test/main.c)
-file(COPY test/utf8_sample.txt DESTINATION ${CMAKE_BINARY_DIR})
-file(COPY test/fonts/FreeSans.ttf DESTINATION ${CMAKE_BINARY_DIR}/fonts)
-target_include_directories(FontCache PUBLIC .)
-target_link_libraries(FontCache-tests FontCache ${CMAKE_DL_LIBS} m)
+option(SDL_FONTCACHE_BUILD_TESTS "Build tests" OFF)
+if(SDL_FONTCACHE_BUILD_TESTS)
+  add_executable(
+    FontCache-tests
+    test/main.c)
+  file(COPY test/utf8_sample.txt DESTINATION ${CMAKE_BINARY_DIR})
+  file(COPY test/fonts/FreeSans.ttf DESTINATION ${CMAKE_BINARY_DIR}/fonts)
+  target_include_directories(FontCache PUBLIC .)
+  target_link_libraries(FontCache-tests FontCache ${CMAKE_DL_LIBS} m)
+endif()
+
